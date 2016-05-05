@@ -14,3 +14,4 @@ https://drive.google.com/file/d/0BzV-aGbwA242LVppRUhtc05uYlk/view?usp=sharing
 ## Communication Diagram
 https://drive.google.com/file/d/0BzV-aGbwA242ZTE1ZWNPTUhXcTg/view?usp=sharing
 ## Design Rationale
+https://docs.google.com/document/d/1_7Cli00VjXkbuAcu8C1sfXlC5Zeg_xViugokW_wAxRQ/edit?usp=sharing
