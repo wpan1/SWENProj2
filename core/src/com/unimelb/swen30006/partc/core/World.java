@@ -84,6 +84,10 @@ public class World implements ISteppable {
 		this.collisions = new ArrayList<Rectangle2D.Double>();
 	}
 
+	public Intersection[] getIntersections() {
+		return intersections;
+	}
+
 	/**
 	 * Retrieve all world objects that exist
 	 * @return all objects in the world

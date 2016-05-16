@@ -19,6 +19,7 @@ public class Light extends Infrastructure {
 	private static final float WIDTH = 1f;
 	private static final float LENGHT = 1f;
 	
+	
 	public Light(Double pos, Color col, float radius, float brightness) {
 		super(pos, WIDTH, LENGHT, col, new LightRenderer(col, radius), Infrastructure.InfrastructureType.Light);
 		LightRenderer renderer = (LightRenderer) getRenderObject();

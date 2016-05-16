@@ -155,6 +155,27 @@ public class Road {
 		return shape;
 	}
 
+	
+	public float getLength() {
+		return length;
+	}
+
+	public float getWidth() {
+		return width;
+	}
+
+	public Point2D.Double getStartPos() {
+		return startPos;
+	}
+
+	public Point2D.Double getEndPos() {
+		return endPos;
+	}
+
+	public RoadMarking[] getMarkers() {
+		return markers;
+	}
+
 	public boolean overlaps(Rectangle2D.Double rect) {
 		return this.shape.intersects(rect);
 	}
