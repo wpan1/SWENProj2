@@ -10,30 +10,51 @@ import com.unimelb.swen30006.partc.roads.Intersection;
 import com.unimelb.swen30006.partc.roads.Intersection.Direction;
 import com.unimelb.swen30006.partc.roads.Road;
 
-public class AStar implements PathGenerator{
+public class Greedy implements PathGenerator{
 	
 	World world;
 	ArrayList<Point2D.Double> allPoints;
 	WorldConverter convertedWorld;
 	
-	public AStar(){
+	public Greedy(){
+		// Convert world into points
 		this.convertedWorld = new WorldConverter("test_course.xml");
 	}
 	
+	/**
+	 * Calculates Estimated time in distance values
+	 * @param c Current variables for car
+	 * @return float of estimated time
+	 */
 	@Override
 	public float calculateETA(Car c) {
-		float totalDist = 0.0f;
+		// Return zero if route not calculated
+		if (allPoints == null){
+			return 0f;
+		}
+		// Add distance from car to first intersection
+		float totalDist = (float) (allPoints.get(0).distance(c.getPosition()));
 		int vertexIndex = 0;
+		// Add distance between intersections
 		while (vertexIndex + 1 < convertedWorld.getMap().size() - 1){
 			Point2D.Double v1 = convertedWorld.getMap().get(vertexIndex).point;
 			Point2D.Double v2 = convertedWorld.getMap().get(vertexIndex + 1).point;
 			totalDist += v1.distance(v2);
 		}
+		// Return total distances
 		return totalDist;
 	}
 	
+	/**
+	 * Finds path using basic heruistic at each vertex
+	 * Moves to vertex greedily, always going to closest vertex
+	 * to the destination
+	 * @param c Car for starting position check
+	 * @param destination End point
+	 * @return Boolean value whether path is possible
+	 */
 	@Override
-	public boolean findShortestPath(Car c, Point2D.Double destination) {
+	public boolean findPath(Car c, Point2D.Double destination) {
 		// Get closest intersection to car
 		Vertex carVertex = null;
 		Double carDis = Double.MIN_VALUE;
@@ -54,8 +75,9 @@ public class AStar implements PathGenerator{
 				endDis = disVertex;
 			}
 		}
-		// Get route to endVertes
+		// Get route to endVertex
 		ArrayList<Point2D.Double> allPoints = new ArrayList<Point2D.Double>();
+		// Travels to next closest vertex to destination
 		while (carVertex != endVertex){
 			allPoints.add(carVertex.point);
 			// Find closest vertex to end vertex
@@ -75,6 +97,8 @@ public class AStar implements PathGenerator{
 		allPoints.add(carVertex.point);
 		// Add point from intersection to destination
 		allPoints.add(destination);
+		// Modify instance variable
+		this.allPoints = allPoints;
 		return true;
 	}
 	
