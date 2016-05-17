@@ -4,7 +4,9 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public class Vertex{
+	// Point in 2D space
 	Point2D.Double point;
+	// Vertexes that are connected to current vertex
 	ArrayList<Vertex> connections;
 	
 	public Vertex(Point2D.Double point){
@@ -12,12 +14,21 @@ public class Vertex{
 		connections = new ArrayList<Vertex>();
 	}
 	
+	/**
+	 * Check if vertex is connected to current vertex
+	 * @param vertex Vertex to check
+	 * @return boolean value whether vertices are connected
+	 */
 	public boolean findVertex(Vertex vertex){
 		if (connections.contains(vertex))
 			return true;
 		return false;
 	}
 
+	/**
+	 * Hash code for arraylist comparison
+	 * Missing connections as this is irrelevant for comparison
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -26,6 +37,10 @@ public class Vertex{
 		return result;
 	}
 
+	/**
+	 * Equals for object comparisons
+	 * Missing connections as this is irrelevant for comparison
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

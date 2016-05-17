@@ -13,12 +13,12 @@ public class BasicPlanner implements IPlanning{
 	Car c;
 	
 	public BasicPlanner(Car c){
-		this.pg = new AStar();
+		this.pg = new Greedy();
 	}
 	
 	@Override
 	public boolean planRoute(Double destination) {
-		return pg.findShortestPath(c, destination);
+		return pg.findPath(c, destination);
 	}
 
 	@Override
