@@ -13,7 +13,8 @@ public class BasicPlanner implements IPlanning{
 	Car c;
 	
 	public BasicPlanner(Car c){
-		this.pg = new Greedy();
+		this.pg = new Dijkstra();
+		this.c = c;
 	}
 	
 	@Override

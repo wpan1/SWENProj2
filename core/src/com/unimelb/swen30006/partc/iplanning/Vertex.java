@@ -4,12 +4,15 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public class Vertex{
+	// Vertex Name
+	String name;
 	// Point in 2D space
 	Point2D.Double point;
 	// Vertexes that are connected to current vertex
 	ArrayList<Vertex> connections;
 	
-	public Vertex(Point2D.Double point){
+	public Vertex(Point2D.Double point, String name){
+		this.name = name;
 		this.point = point;
 		connections = new ArrayList<Vertex>();
 	}
