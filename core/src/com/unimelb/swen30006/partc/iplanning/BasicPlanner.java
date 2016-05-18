@@ -11,10 +11,12 @@ public class BasicPlanner implements IPlanning{
 	PathGenerator pg;
 	PerceptionHandler pHandler;
 	Car c;
+	CarNavigator cn;
 	
 	public BasicPlanner(Car c){
 		this.pg = new Dijkstra();
 		this.c = c;
+		this.cn = new CarNavigator(c);
 	}
 	
 	@Override
