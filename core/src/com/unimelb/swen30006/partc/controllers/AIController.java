@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.unimelb.swen30006.partc.ai.interfaces.*;
 import com.unimelb.swen30006.partc.core.World;
 import com.unimelb.swen30006.partc.core.objects.Car;
+import com.unimelb.swen30006.partc.iplanning.BasicPlanner;
 
 /**
  * The AI controller for use in integrating your systems with the simulation.
@@ -21,6 +22,7 @@ public class AIController extends Controller {
 	public AIController(Car car, ISensing sensor, IPlanning planner, IPerception classifier) {
 		super(car);
 		// Modify this as you like to instantiate your interface
+		this.planner = new BasicPlanner(car);
 	}
 
 	@Override

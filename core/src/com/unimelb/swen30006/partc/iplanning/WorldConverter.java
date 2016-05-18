@@ -69,14 +69,6 @@ public class WorldConverter {
 			e.printStackTrace();
 			System.exit(0);
 		}
-		for (Vertex v : vertexMap){
-			System.out.print(v.point + ": ");
-			for (Vertex v2 : v.connections){
-				System.out.print(v2.point + ",");
-			}
-			System.out.println();
-		}
-		System.out.println(vertexMap.size());
 	}
 	
 	private void processIntersection(Element intersectionElement){
@@ -96,15 +88,35 @@ public class WorldConverter {
 		// Create start intersection
 		String startID = startElement.get("id");
 		Intersection startInt = this.intersections.get(startID);
-		Vertex startVer = new Vertex(startInt.pos);
-		if (!vertexMap.contains(startVer))
+		Vertex startVer = null;
+		// Check if vertex is initialised
+		for (Vertex vertex : this.vertexMap){
+			if (vertex.point.equals(startInt.pos)){
+				startVer = vertex;
+			}
+		}
+		// If not inistialised, create new vertex
+		if (startVer == null){
+			startVer = new Vertex(startInt.pos, startID);
 			vertexMap.add(startVer);
+		}
 		// Create end intersection
 		String endID = endElement.get("id");
 		Intersection endInt = this.intersections.get(endID);
-		Vertex endVer = new Vertex(endInt.pos);
-		if (!vertexMap.contains(endVer))
+		Vertex endVer = null;
+		// Check if vertex is initialised
+		for (Vertex vertex : this.vertexMap){
+			if (vertex.point.equals(endInt.pos)){
+				endVer = vertex;
+			}
+		}
+		// If not inistialised, create new vertex
+		if (endVer == null){
+			endVer = new Vertex(endInt.pos, endID);
 			vertexMap.add(endVer);
+		}
+
+		
 		for (Vertex vertex : vertexMap){
 			// Add vertex to the start vertex in graph
 			if (vertex.point.equals(startInt.pos)){
