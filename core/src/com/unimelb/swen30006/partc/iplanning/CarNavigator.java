@@ -7,27 +7,37 @@ import com.badlogic.gdx.math.Vector2;
 import com.unimelb.swen30006.partc.core.objects.Car;
 
 public class CarNavigator {
+	private final static float ROTATION_RATE = 150f;
 	Car c;
 	
 	public CarNavigator(Car c){
 		this.c = c;
 	}
 	
-	public boolean needSteer(Point2D.Double nextPoint){
+	public boolean needSteer(Point2D.Double nextPoint, float delta){
 		Vector2 curPosition = new Vector2((float)(nextPoint.x - this.c.getPosition().x),
 				(float)(nextPoint.y - this.c.getPosition().y));
 		if(curPosition.angle() == this.c.getVelocity().angle()){
 			return false;
 		}
 		else{
-			this.c.turn(curPosition.angle() - this.c.getVelocity().angle());
+			float angle = 0;
+			if(curPosition.angle() > this.c.getVelocity().angle()){
+				angle += ROTATION_RATE*delta;
+			}
+			if(curPosition.angle() < this.c.getVelocity().angle()){
+				angle -= ROTATION_RATE*delta;
+			}
+			this.c.turn(angle);
 			return true;
 		}
 	}
 	
-	public void navigate(ArrayList<Point2D.Double> points){
+	public void navigate(ArrayList<Point2D.Double> points, float delta){
 		c.accelerate();
-		needSteer(points.get(0));
-		points.remove(0);
+		needSteer(points.get(0), delta);
+		if(c.getPosition().distance(points.get(0)) < 1){
+			points.remove(0);
+		}
 	}
 }
