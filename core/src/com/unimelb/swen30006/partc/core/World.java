@@ -13,6 +13,7 @@ import com.unimelb.swen30006.partc.controllers.KeyboardController;
 import com.unimelb.swen30006.partc.core.infrastructure.Light;
 import com.unimelb.swen30006.partc.core.objects.Car;
 import com.unimelb.swen30006.partc.core.objects.WorldObject;
+import com.unimelb.swen30006.partc.iplanning.BasicPlanner;
 import com.unimelb.swen30006.partc.roads.Intersection;
 import com.unimelb.swen30006.partc.roads.Road;
 import com.varunpant.quadtree.Point;
@@ -78,6 +79,8 @@ public class World implements ISteppable {
 		this.cars = new Car[1];
 		this.cars[0] = new Car(new Point2D.Double(80,140), 6, 10, Color.CORAL, 25f, 50f, 6f );
 		this.controllers[0] = new KeyboardController(cars[0]);
+		BasicPlanner bp = new BasicPlanner(cars[0]);
+		bp.planRoute(new Point2D.Double(530.0, 370.0));
 
 		// Remaning variables
 		this.worldTime = MIDDAY;
