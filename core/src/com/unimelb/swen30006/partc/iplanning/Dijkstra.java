@@ -3,13 +3,8 @@ package com.unimelb.swen30006.partc.iplanning;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Stack;
 
-import com.unimelb.swen30006.partc.core.World;
 import com.unimelb.swen30006.partc.core.objects.Car;
-import com.unimelb.swen30006.partc.roads.Intersection;
-import com.unimelb.swen30006.partc.roads.Intersection.Direction;
-import com.unimelb.swen30006.partc.roads.Road;
 
 public class Dijkstra implements PathGenerator{
 	
@@ -111,11 +106,13 @@ public class Dijkstra implements PathGenerator{
 		
 		// Find path to traverse 
 		ArrayList<Point2D.Double> path = new ArrayList<Point2D.Double>();
+		path.add(carVertex.point);
 		while (endVertex != carVertex){
+			System.out.println(endVertex.point);
 			path.add(path.size(), endVertex.point);
 			endVertex = prev.get(endVertex);
 		}
-		
+		path.add(path.size(), destination);
 		return true;
 	}
 	

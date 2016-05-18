@@ -15,6 +15,7 @@ import com.unimelb.swen30006.partc.core.infrastructure.Sign;
 import com.unimelb.swen30006.partc.core.infrastructure.TrafficLight;
 import com.unimelb.swen30006.partc.core.objects.Building;
 import com.unimelb.swen30006.partc.core.objects.WorldObject;
+import com.unimelb.swen30006.partc.iplanning.BasicPlanner;
 import com.unimelb.swen30006.partc.roads.Intersection;
 import com.unimelb.swen30006.partc.roads.Road;
 /**
