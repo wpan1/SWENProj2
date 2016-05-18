@@ -16,6 +16,10 @@ public class Dijkstra implements PathGenerator{
 		this.convertedWorld = new WorldConverter("test_course.xml");
 	}
 	
+	public ArrayList<Point2D.Double> getAllPoints() {
+		return allPoints;
+	}
+
 	/**
 	 * Calculates Estimated time in distance values
 	 * @param c Current variables for car
