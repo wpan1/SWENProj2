@@ -22,8 +22,10 @@ public class BasicPlanner implements IPlanning{
 	
 	@Override
 	public boolean planRoute(Double destination) {
+		// If path generated, return true
 		if ((route = pg.findPath(c, destination)) != null)
 			return true;
+		// Otherwise return false
 		return false;
 	}
 
