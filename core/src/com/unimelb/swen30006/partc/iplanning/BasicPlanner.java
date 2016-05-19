@@ -1,6 +1,8 @@
 package com.unimelb.swen30006.partc.iplanning;
 
+import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Double;
+import java.util.ArrayList;
 
 import com.unimelb.swen30006.partc.ai.interfaces.IPlanning;
 import com.unimelb.swen30006.partc.ai.interfaces.PerceptionResponse;
@@ -11,17 +13,20 @@ public class BasicPlanner implements IPlanning{
 	PathGenerator pg;
 	PerceptionHandler pHandler;
 	Car c;
-	CarNavigator cn;
+	ArrayList<Point2D.Double> route;
 	
 	public BasicPlanner(Car c){
 		this.pg = new Dijkstra();
 		this.c = c;
-		this.cn = new CarNavigator(c);
 	}
 	
 	@Override
 	public boolean planRoute(Double destination) {
-		return pg.findPath(c, destination);
+		// If path generated, return true
+		if ((route = pg.findPath(c, destination)) != null)
+			return true;
+		// Otherwise return false
+		return false;
 	}
 
 	@Override
