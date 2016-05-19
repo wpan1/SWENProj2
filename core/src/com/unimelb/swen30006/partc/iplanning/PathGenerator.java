@@ -21,5 +21,5 @@ public interface PathGenerator {
 	 * @param destination End point
 	 * @return Boolean value whether path is possible
 	 */
-	public boolean findPath(Car c, Point2D.Double destination);
+	public ArrayList<Point2D.Double> findPath(Car c, Point2D.Double destination);
 }
