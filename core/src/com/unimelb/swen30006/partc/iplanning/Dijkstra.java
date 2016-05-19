@@ -113,7 +113,7 @@ public class Dijkstra implements PathGenerator{
 		path.add(carVertex.point);
 		while (endVertex != carVertex){
 			System.out.println(endVertex.point);
-			path.add(path.size(), endVertex.point);
+			path.add(0, endVertex.point);
 			endVertex = prev.get(endVertex);
 		}
 		path.add(path.size(), destination);
