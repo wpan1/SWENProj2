@@ -47,7 +47,7 @@ public class Dijkstra implements PathGenerator{
 	 * @return Boolean value whether path is possible
 	 */
 	@Override
-	public boolean findPath(Car c, Point2D.Double destination) {	
+	public ArrayList<Point2D.Double> findPath(Car c, Point2D.Double destination) {	
 		// Debug print info
 		for (Vertex v : convertedWorld.getMap()){
 			System.out.print(v.point + "," + v.name + ": ");
@@ -113,7 +113,8 @@ public class Dijkstra implements PathGenerator{
 			endVertex = prev.get(endVertex);
 		}
 		path.add(path.size(), destination);
-		return true;
+		
+		return path;
 	}
 	
 	/**
