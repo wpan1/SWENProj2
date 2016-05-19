@@ -8,6 +8,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.unimelb.swen30006.partc.ai.interfaces.IPlanning;
+import com.unimelb.swen30006.partc.controllers.AIController;
 import com.unimelb.swen30006.partc.controllers.Controller;
 import com.unimelb.swen30006.partc.controllers.KeyboardController;
 import com.unimelb.swen30006.partc.core.infrastructure.Light;
@@ -78,7 +80,8 @@ public class World implements ISteppable {
 		this.controllers = new Controller[1];
 		this.cars = new Car[1];
 		this.cars[0] = new Car(new Point2D.Double(80,140), 6, 10, Color.CORAL, 25f, 50f, 6f );
-		this.controllers[0] = new KeyboardController(cars[0]);
+		IPlanning ip = new BasicPlanner(this.cars[0]);
+		this.controllers[0] = new AIController(cars[0], null, ip, null);
 		BasicPlanner bp = new BasicPlanner(cars[0]);
 		bp.planRoute(new Point2D.Double(530.0, 370.0));
 

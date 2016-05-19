@@ -9,11 +9,20 @@ import com.unimelb.swen30006.partc.core.objects.Car;
 public class CarNavigator {
 	private final static float ROTATION_RATE = 150f;
 	Car c;
+	ArrayList<Point2D.Double> route;
 	
 	public CarNavigator(Car c){
 		this.c = c;
 	}
 	
+	public void setRoute(ArrayList<Point2D.Double> route) {
+		this.route = route;
+	}
+
+	public ArrayList<Point2D.Double> getRoute() {
+		return route;
+	}
+
 	public boolean needSteer(Point2D.Double nextPoint, float delta){
 		Vector2 curPosition = new Vector2((float)(nextPoint.x - this.c.getPosition().x),
 				(float)(nextPoint.y - this.c.getPosition().y));
