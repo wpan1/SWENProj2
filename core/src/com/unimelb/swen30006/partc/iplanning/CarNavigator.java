@@ -51,10 +51,17 @@ public class CarNavigator {
 		if(points != null && !points.isEmpty()){
 			this.c.accelerate();
 			// steer the car
-			needSteer(points.get(0), delta);
+			Point2D.Double nextpoint;
+			if(points.size() == 1){
+				nextpoint = points.get(0);
+			}
+			else{
+				nextpoint = this.intersectionEnterPoint(points.get(0));
+			}
+			needSteer(nextpoint, delta);
 			this.c.update(delta);
 			// get next way point
-			if(c.getPosition().distance(points.get(0)) < 1){
+			if(c.getPosition().distance(nextpoint) < 1){
 				points.remove(0);
 			}
 		}
@@ -85,5 +92,37 @@ public class CarNavigator {
 		else{
 			return false;
 		}
+	}
+	
+	public ArrayList<Point2D.Double> pointsConvert(ArrayList<Point2D.Double> points){
+		int size = points.size();
+		for(int i = 0; i < size - 1; i++){
+			points.get(i).x = points.get(i).x + 15;
+			points.get(i).y = points.get(i).y + 15;
+		}
+		return points;
+	}
+	
+	public Point2D.Double intersectionEnterPoint(Point2D.Double point){
+		ArrayList<Point2D.Double> points = new ArrayList<Point2D.Double>();
+		Point2D.Double point1 = new Point2D.Double(point.x - 7.5,point.y - 15);
+		points.add(point1);
+		Point2D.Double point2 = new Point2D.Double(point.x + 7.5,point.y + 15);
+		points.add(point2);
+		Point2D.Double point3 = new Point2D.Double(point.x - 15,point.y + 7.5);
+		points.add(point3);
+		Point2D.Double point4 = new Point2D.Double(point.x + 15,point.y - 7.5);
+		points.add(point4);
+		
+		Point2D.Double cloestPoint = point1;
+		for(Point2D.Double p: points){
+			if(this.c.getPosition().distance(cloestPoint) > this.c.getPosition().distance(p)){
+				cloestPoint = p;
+			}
+		}
+		return cloestPoint;
+		
+		
+		
 	}
 }
