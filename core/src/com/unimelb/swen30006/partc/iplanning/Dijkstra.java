@@ -11,9 +11,8 @@ public class Dijkstra implements PathGenerator{
 	ArrayList<Point2D.Double> allPoints;
 	WorldConverter convertedWorld;
 	
-	public Dijkstra(){
-		// Convert world into points
-		this.convertedWorld = new WorldConverter("test_course.xml");
+	public Dijkstra(WorldConverter convertedWorld){
+		this.convertedWorld = convertedWorld;
 	}
 	
 	public ArrayList<Point2D.Double> getAllPoints() {
@@ -76,11 +75,11 @@ public class Dijkstra implements PathGenerator{
 				carDis = dis;
 			}
 			// Find distance from destination to specified vertex
-			Double dis2 = destination.distance(v.point);
+			dis = destination.distance(v.point);
 			// Check distance for end
-			if (dis2 < endDis){
+			if (dis < endDis){
 				endVertex = v;
-				endDis = dis2;
+				endDis = dis;
 			}
 		}
 		
@@ -110,19 +109,16 @@ public class Dijkstra implements PathGenerator{
 		
 		// Find path to traverse 
 		ArrayList<Point2D.Double> path = new ArrayList<Point2D.Double>();
-		
 		path.add(carVertex.point);
 		while (endVertex != carVertex){
-			path.add(1, endVertex.point);
+			System.out.println(endVertex.point);
+			path.add(path.size(), endVertex.point);
 			endVertex = prev.get(endVertex);
 		}
 		path.add(path.size(), destination);
 		
-		int i = 0;
-		System.out.println(c.getPosition());
-		// Debug print route
 		for (Point2D.Double pathvtx : path){
-			System.out.println(i + "," + pathvtx);
+			System.out.println(pathvtx);
 		}
 		
 		return path;
