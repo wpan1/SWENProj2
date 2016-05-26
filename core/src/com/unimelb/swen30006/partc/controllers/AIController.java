@@ -1,5 +1,7 @@
 package com.unimelb.swen30006.partc.controllers;
 
+import java.awt.geom.Point2D;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.unimelb.swen30006.partc.ai.interfaces.*;
@@ -22,13 +24,13 @@ public class AIController extends Controller {
 	public AIController(Car car, ISensing sensor, IPlanning planner, IPerception classifier) {
 		super(car);
 		// Modify this as you like to instantiate your interface
-		this.planner = new BasicPlanner(car);
+		this.planner = planner;
 	}
 
 	@Override
 	public void update(float delta) {
 		// First update sensing
-		sensor.update(this.car.getPosition(), delta, World.VISIBILITY_RADIUS);
+		/*sensor.update(this.car.getPosition(), delta, World.VISIBILITY_RADIUS);
 		Vector2[][] velMap = sensor.getVelocityMap();
 		boolean[][] spaceMap = sensor.getSpaceMap();
 		Color[][] colMap = sensor.getColourMap();
@@ -36,8 +38,8 @@ public class AIController extends Controller {
 		// Then updating classifier
 		PerceptionResponse[] responses = classifier.analyseSurroundings(spaceMap, colMap, velMap);
 		
-		// Finally update planner
-		planner.update(responses, delta);		
+		*/// Finally update planner
+		planner.update(null, delta);
 	}
 
 }
