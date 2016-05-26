@@ -76,11 +76,11 @@ public class Dijkstra implements PathGenerator{
 				carDis = dis;
 			}
 			// Find distance from destination to specified vertex
-			dis = destination.distance(v.point);
+			Double dis2 = destination.distance(v.point);
 			// Check distance for end
-			if (dis < endDis){
+			if (dis2 < endDis){
 				endVertex = v;
-				endDis = dis;
+				endDis = dis2;
 			}
 		}
 		
@@ -110,13 +110,20 @@ public class Dijkstra implements PathGenerator{
 		
 		// Find path to traverse 
 		ArrayList<Point2D.Double> path = new ArrayList<Point2D.Double>();
+		
 		path.add(carVertex.point);
 		while (endVertex != carVertex){
-			System.out.println(endVertex.point);
-			path.add(path.size(), endVertex.point);
+			path.add(1, endVertex.point);
 			endVertex = prev.get(endVertex);
 		}
 		path.add(path.size(), destination);
+		
+		int i = 0;
+		System.out.println(c.getPosition());
+		// Debug print route
+		for (Point2D.Double pathvtx : path){
+			System.out.println(i + "," + pathvtx);
+		}
 		
 		return path;
 	}

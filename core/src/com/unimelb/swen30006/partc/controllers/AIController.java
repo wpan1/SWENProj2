@@ -1,5 +1,7 @@
 package com.unimelb.swen30006.partc.controllers;
 
+import java.awt.geom.Point2D;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.unimelb.swen30006.partc.ai.interfaces.*;
@@ -37,7 +39,7 @@ public class AIController extends Controller {
 		PerceptionResponse[] responses = classifier.analyseSurroundings(spaceMap, colMap, velMap);
 		
 		*/// Finally update planner
-		planner.update(null, delta);		
+		planner.update(null, delta);
 	}
 
 }

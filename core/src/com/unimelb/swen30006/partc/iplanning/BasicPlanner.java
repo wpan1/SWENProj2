@@ -25,8 +25,10 @@ public class BasicPlanner implements IPlanning{
 	@Override
 	public boolean planRoute(Double destination) {
 		// If path generated, return true
-		if ((route = pg.findPath(c, destination)) != null){
-			cn.setRoute(route);
+		if ((this.route = pg.findPath(c, destination)) != null){
+			System.out.println(route);
+			this.route = cn.pointsConvert(this.route);
+			System.out.println(route);
 			return true;
 		}
 		// Otherwise return false
@@ -35,7 +37,8 @@ public class BasicPlanner implements IPlanning{
 
 	@Override
 	public void update(PerceptionResponse[] results, float delta) {
-		System.out.println(this.cn.getRoute());
+		// car navigation follow the route
+		cn.navigate(route, delta);
 	}
 
 	@Override
