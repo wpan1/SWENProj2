@@ -71,7 +71,21 @@ public class WorldConverter {
 				this.roads.add(processRoad(e));
 			}
 			
-			
+			/* Add intersections that are incorrectly labeled in the xml file
+			 * All intersections that have x coordinate 480 do not have
+			 * roads specified connecting to intersections with coordinate
+			 * x of 630, even though they should be.
+			 */
+			for (Vertex start : vertexMap){
+				if (start.point.x == 480.0){
+					for (Vertex end : vertexMap){
+						if (end.point.x == 630 && end.point.y == start.point.y){
+							start.connections.add(end);
+							end.connections.add(start);
+						}
+					}
+				}
+			}
 			
 		} catch (Exception e){
 			e.printStackTrace();
