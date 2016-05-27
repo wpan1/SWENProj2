@@ -20,26 +20,33 @@ import com.unimelb.swen30006.partc.roads.Road;
 public class WorldConverter {
 	// Private variables for storing state and where to get data from
 	private String fileName;
-	private boolean intialised;
+	
+	// Private data variable for minimum road distance
+	private final float MAX_ROAD_DISTANCE = 50;
 
 	// Private data structures for loading things
-	private ArrayList<WorldObject> objects;
 	private ArrayList<Road> roads;
 	private HashMap<String, Intersection> intersections;
 	private ArrayList<Vertex> vertexMap;
 	
 	public WorldConverter(String file){
 		this.fileName = file;
-		this.intialised = false;
 		this.intersections = new HashMap<String, Intersection>();
 		this.vertexMap = new ArrayList<Vertex>();
 		initialise();
 	}
 	
+	/**
+	 * Getter for world map
+	 * @return world map
+	 */
 	public ArrayList<Vertex> getMap(){
 		return this.vertexMap;
 	}
 	
+	/**
+	 * Initialise the converted world
+	 */
 	private void initialise(){
 		try {
 			// Build the doc factory
@@ -48,7 +55,6 @@ public class WorldConverter {
 			Element root = reader.parse(file);
 
 			// Setup data structures
-			this.objects = new ArrayList<WorldObject>();
 			this.roads = new ArrayList<Road>();
 
 			// Process Intersections
@@ -64,13 +70,33 @@ public class WorldConverter {
 			for(Element e : roadList){
 				this.roads.add(processRoad(e));
 			}
-			this.intialised = true;
+			
+			/* Add intersections that are incorrectly labeled in the xml file
+			 * All intersections that have x coordinate 480 do not have
+			 * roads specified connecting to intersections with coordinate
+			 * x of 630, even though they should be.
+			 */
+			for (Vertex start : vertexMap){
+				if (start.point.x == 480.0){
+					for (Vertex end : vertexMap){
+						if (end.point.x == 630 && end.point.y == start.point.y){
+							start.connections.add(end);
+							end.connections.add(start);
+						}
+					}
+				}
+			}
+			
 		} catch (Exception e){
 			e.printStackTrace();
 			System.exit(0);
 		}
 	}
 	
+	/**
+	 * Processes intersection
+	 * @param intersectionElement Intersection element
+	 */
 	private void processIntersection(Element intersectionElement){
 		// Retrieve all the data
 		String roadID = intersectionElement.get("intersection_id");
@@ -84,6 +110,11 @@ public class WorldConverter {
 		this.intersections.put(roadID, i);		
 	}
 	
+	/**
+	 * Adds intersection to graph structure
+	 * @param startElement Starting road element
+	 * @param endElement Ending road element
+	 */
 	private void addIntToGraph(Element startElement, Element endElement){
 		// Create start intersection
 		String startID = startElement.get("id");
@@ -133,6 +164,11 @@ public class WorldConverter {
 		}
 	}
 	
+	/**
+	 * Processes road from xml element
+	 * @param roadElement xml element of road
+	 * @return Returns a road
+	 */
 	private Road processRoad(Element roadElement){
 		// Retrieve data
 		float startX = roadElement.getFloat("start_x");
@@ -158,5 +194,23 @@ public class WorldConverter {
 		}
 		// Return road
 		return r;
+	}
+	/**
+	 * Finds the closest road to a point and returns this road. Does not consider actual travel distance
+	 * to a road, purely the direct distance
+	 * @param pos the position to check from
+	 * @return the closest road to that position, of null if none are within MAX_ROAD_DISTANCE
+	 */
+	public Road closestRoad(Point2D.Double pos){
+		float minDist = Float.MAX_VALUE;
+		Road minRoad = null;
+		for(Road r: this.roads){
+			float tmpDist = r.minDistanceTo(pos);
+			if(tmpDist < minDist){
+				minDist = tmpDist;
+				minRoad = r;
+			}
+		}
+		return (minDist < MAX_ROAD_DISTANCE) ? minRoad : null;
 	}
 }

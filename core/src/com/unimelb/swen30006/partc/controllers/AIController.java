@@ -25,6 +25,7 @@ public class AIController extends Controller {
 		super(car);
 		// Modify this as you like to instantiate your interface
 		this.planner = planner;
+		planner.planRoute(new Point2D.Double(430.0, 370.0));
 	}
 
 	@Override
@@ -39,7 +40,7 @@ public class AIController extends Controller {
 		PerceptionResponse[] responses = classifier.analyseSurroundings(spaceMap, colMap, velMap);
 		
 		*/// Finally update planner
-		planner.update(null, delta);
+		planner.update(null, delta);		
 	}
 
 }
