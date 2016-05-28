@@ -49,7 +49,6 @@ public class CarNavigator {
 	public void navigate(ArrayList<Point2D.Double> points, float delta){
 		// check if car reaches the destination 
 		if(points != null && !points.isEmpty()){
-			this.c.accelerate();
 			// steer the car
 			Point2D.Double nextpoint;
 			if(points.size() == 1){
