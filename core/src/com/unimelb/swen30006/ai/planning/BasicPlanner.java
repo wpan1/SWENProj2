@@ -1,4 +1,4 @@
-package com.unimelb.swen30006.partc.iplanning;
+package com.unimelb.swen30006.ai.planning;
 
 import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Double;
@@ -33,6 +33,7 @@ public class BasicPlanner implements IPlanning{
 		if ((destRoad = convertedWorld.closestRoad(destination)) == null){
 			return false;
 		}
+		// Change direction to correct point on road
 		destination.x = (destRoad.getEndPos().getX() + destRoad.getStartPos().getX())/2 - 30;
 		destination.y = (destRoad.getEndPos().getY() + destRoad.getStartPos().getY())/2 + 7.5;
 		// If path generated, return true

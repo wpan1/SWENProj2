@@ -1,4 +1,4 @@
-package com.unimelb.swen30006.partc.iplanning;
+package com.unimelb.swen30006.ai.planning;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -61,7 +61,7 @@ public class CarNavigator {
 			needSteer(nextpoint, delta);
 			this.c.update(delta);
 			// get next way point
-			if(c.getPosition().distance(nextpoint) < 6){
+			if(c.getPosition().distance(nextpoint) < 5){
 				points.remove(0);
 			}
 		}
