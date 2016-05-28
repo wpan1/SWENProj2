@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import com.unimelb.swen30006.partc.ai.interfaces.IPlanning;
 import com.unimelb.swen30006.partc.ai.interfaces.PerceptionResponse;
 import com.unimelb.swen30006.partc.core.objects.Car;
+import com.unimelb.swen30006.partc.roads.Road;
 
 public class BasicPlanner implements IPlanning{
 
@@ -15,20 +16,28 @@ public class BasicPlanner implements IPlanning{
 	Car c;
 	ArrayList<Point2D.Double> route;
 	CarNavigator cn;
+	WorldConverter convertedWorld;
 	
 	public BasicPlanner(Car c){
-		this.pg = new Dijkstra();
+		// Convert world into points
+		this.convertedWorld = new WorldConverter("test_course.xml");
+		this.pg = new Dijkstra(convertedWorld);
 		this.c = c;
 		this.cn = new CarNavigator(this.c);
 	}
 	
 	@Override
 	public boolean planRoute(Double destination) {
+		Road destRoad;
+		// Destination is not within 50 units
+		if ((destRoad = convertedWorld.closestRoad(destination)) == null){
+			return false;
+		}
+		destination.x = (destRoad.getEndPos().getX() + destRoad.getStartPos().getX())/2 - 30;
+		destination.y = (destRoad.getEndPos().getY() + destRoad.getStartPos().getY())/2 + 10;
 		// If path generated, return true
 		if ((this.route = pg.findPath(c, destination)) != null){
-			System.out.println(route);
 			this.route = cn.pointsConvert(this.route);
-			System.out.println(route);
 			return true;
 		}
 		// Otherwise return false

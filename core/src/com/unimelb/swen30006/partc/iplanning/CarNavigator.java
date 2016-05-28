@@ -61,7 +61,7 @@ public class CarNavigator {
 			needSteer(nextpoint, delta);
 			this.c.update(delta);
 			// get next way point
-			if(c.getPosition().distance(nextpoint) < 1){
+			if(c.getPosition().distance(nextpoint) < 5){
 				points.remove(0);
 			}
 		}
