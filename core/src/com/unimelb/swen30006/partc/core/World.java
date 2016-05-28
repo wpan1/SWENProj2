@@ -8,7 +8,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.unimelb.swen30006.partc.ai.interfaces.IPerception;
 import com.unimelb.swen30006.partc.ai.interfaces.IPlanning;
+import com.unimelb.swen30006.partc.ai.interfaces.ISensing;
+import com.unimelb.swen30006.partc.ai.perception.Perception;
+import com.unimelb.swen30006.partc.ai.sensor.CentralSensor;
 import com.unimelb.swen30006.partc.controllers.AIController;
 import com.unimelb.swen30006.partc.controllers.Controller;
 import com.unimelb.swen30006.partc.controllers.KeyboardController;
@@ -80,8 +84,10 @@ public class World implements ISteppable {
 		this.controllers = new Controller[1];
 		this.cars = new Car[1];
 		this.cars[0] = new Car(new Point2D.Double(80,140), 6, 10, Color.CORAL, 25f, 50f, 6f );
-		IPlanning ip = new BasicPlanner(this.cars[0]);
-		this.controllers[0] = new AIController(cars[0], null, ip, null);
+		IPlanning iplan = new BasicPlanner(this.cars[0]);
+		IPerception iperception = new Perception();
+		ISensing is = new CentralSensor(this, this.cars[0]);
+		this.controllers[0] = new AIController(cars[0], null, iplan, null);
 
 		// Remaning variables
 		this.worldTime = MIDDAY;

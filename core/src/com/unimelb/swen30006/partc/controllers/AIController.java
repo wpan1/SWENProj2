@@ -39,7 +39,7 @@ public class AIController extends Controller {
 		PerceptionResponse[] responses = classifier.analyseSurroundings(spaceMap, colMap, velMap);
 		
 		// Finally update planner
-		planner.update(responses, delta);		
+		//planner.update(responses, delta);		
 	}
 
 }

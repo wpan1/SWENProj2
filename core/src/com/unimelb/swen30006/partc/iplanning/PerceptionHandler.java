@@ -29,9 +29,12 @@ public class PerceptionHandler {
 	 * @return the highest event that is nearest the car
 	 */
 	public PerceptionResponse prioritiseResponse(PerceptionResponse[] results) {
-		int id = 0;
-		for(int i = 0; i<results.length;i++){
-			// to be ordered
+		int id = 0; 
+		PerceptionResponse nextevent = results[0];
+		for(PerceptionResponse pr: results){
+			if(nextevent.timeToCollision > pr.timeToCollision){
+				
+			}
 		}
 		// change position
 		PerceptionResponse temp = results[0];
