@@ -50,7 +50,7 @@ public class BasicPlanner implements IPlanning{
 	public void update(PerceptionResponse[] results, float delta) {
 		// car navigation follow the route
 		cn.navigate(route, delta);
-		ph.dealHighestResponse(ph.prioritiseResponse(results));
+		ph.dealHighestResponse(ph.prioritiseResponse(results), delta);
 	}
 
 	@Override
