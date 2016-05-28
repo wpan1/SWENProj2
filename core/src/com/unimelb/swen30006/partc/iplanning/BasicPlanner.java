@@ -16,6 +16,7 @@ public class BasicPlanner implements IPlanning{
 	Car c;
 	ArrayList<Point2D.Double> route;
 	CarNavigator cn;
+	PerceptionHandler ph;
 	WorldConverter convertedWorld;
 	
 	public BasicPlanner(Car c){
@@ -24,6 +25,7 @@ public class BasicPlanner implements IPlanning{
 		this.pg = new Dijkstra(convertedWorld);
 		this.c = c;
 		this.cn = new CarNavigator(this.c);
+		this.ph = new PerceptionHandler(this.c);
 	}
 	
 	@Override
@@ -48,6 +50,7 @@ public class BasicPlanner implements IPlanning{
 	public void update(PerceptionResponse[] results, float delta) {
 		// car navigation follow the route
 		cn.navigate(route, delta);
+		ph.dealHighestResponse(ph.prioritiseResponse(results));
 	}
 
 	@Override

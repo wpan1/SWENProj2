@@ -1,22 +1,16 @@
 package com.unimelb.swen30006.partc.iplanning;
 
-import com.badlogic.gdx.graphics.Color;
 import com.unimelb.swen30006.partc.ai.interfaces.PerceptionResponse;
 import com.unimelb.swen30006.partc.core.infrastructure.TrafficLight;
-import com.unimelb.swen30006.partc.core.infrastructure.TrafficLight.State;
 import com.unimelb.swen30006.partc.core.objects.Car;
 
 public class PerceptionHandler {
 	private Car car;
-	private static final float MAX = 1000;
-	private Color color;
 
 	// Enum for data
 	public enum Classification {
 		Building, TrafficLight, Car, RoadMarking, LaneMarking, Sign, StreetLight
 	}
-
-	private State state;
 
 	public PerceptionHandler(Car c){
 		this.car = c;
@@ -29,15 +23,24 @@ public class PerceptionHandler {
 	 * @return the highest event that is nearest the car
 	 */
 	public PerceptionResponse prioritiseResponse(PerceptionResponse[] results) {
-		int id = 0;
-		for(int i = 0; i<results.length;i++){
+		PerceptionResponse nextResponse = results[0];
+		PerceptionResponse trafficresult = null;
+		for(PerceptionResponse pr: results){
 			// to be ordered
+			if(nextResponse.timeToCollision > pr.timeToCollision){
+				nextResponse = pr;
+			}
+			if(pr.objectType.equals(Classification.TrafficLight) && pr.distance < 10){
+				trafficresult = pr;
+			}
 		}
 		// change position
-		PerceptionResponse temp = results[0];
-		results[0] = results[id];
-		results[id] = temp;
-		return results[0];
+		if(trafficresult != null && nextResponse.distance < trafficresult.distance){
+			return nextResponse;
+		}
+		else{
+			return trafficresult;
+		}
 	}
 	
 	/**

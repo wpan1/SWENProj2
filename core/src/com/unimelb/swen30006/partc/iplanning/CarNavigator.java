@@ -32,6 +32,7 @@ public class CarNavigator {
 			// find a steering direction
 			if(angleconvert(curPosition.angle(), this.c.getVelocity().angle())){
 				angle += ROTATION_RATE*delta;
+				angle *= 1.5;
 			}
 			else{
 				angle -= ROTATION_RATE*delta;
