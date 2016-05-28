@@ -33,11 +33,11 @@ public class BasicPlanner implements IPlanning{
 		if ((destRoad = convertedWorld.closestRoad(destination)) == null){
 			return false;
 		}
-		destination.x = (destRoad.getEndPos().getX() + destRoad.getStartPos().getX())/2;
-		destination.y = (destRoad.getEndPos().getY() + destRoad.getStartPos().getY())/2;
+		destination.x = (destRoad.getEndPos().getX() + destRoad.getStartPos().getX())/2 - 30;
+		destination.y = (destRoad.getEndPos().getY() + destRoad.getStartPos().getY())/2 + 10;
 		// If path generated, return true
-		if ((route = pg.findPath(c, destination)) != null){
-			cn.setRoute(route);
+		if ((this.route = pg.findPath(c, destination)) != null){
+			this.route = cn.pointsConvert(this.route);
 			return true;
 		}
 		// Otherwise return false
@@ -46,9 +46,8 @@ public class BasicPlanner implements IPlanning{
 
 	@Override
 	public void update(PerceptionResponse[] results, float delta) {
-		this.c.accelerate();
-		this.c.update(delta);
-		//System.out.println(this.cn.getRoute());
+		// car navigation follow the route
+		cn.navigate(route, delta);
 	}
 
 	@Override

@@ -25,7 +25,7 @@ public class AIController extends Controller {
 		super(car);
 		// Modify this as you like to instantiate your interface
 		this.planner = planner;
-		planner.planRoute(new Point2D.Double(430.0, 370.0));
+		planner.planRoute(new Point2D.Double(600.0, 370.0));
 	}
 
 	@Override
