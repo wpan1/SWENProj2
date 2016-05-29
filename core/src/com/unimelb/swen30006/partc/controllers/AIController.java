@@ -25,6 +25,8 @@ public class AIController extends Controller {
 		super(car);
 		// Modify this as you like to instantiate your interface
 		this.planner = planner;
+		this.sensor = sensor;
+		this.classifier = classifier;
 		planner.planRoute(new Point2D.Double(600.0, 370.0));
 	}
 
@@ -40,7 +42,7 @@ public class AIController extends Controller {
 		PerceptionResponse[] responses = classifier.analyseSurroundings(spaceMap, colMap, velMap);
 		
 		// Finally update planner
-		//planner.update(responses, delta);		
+		planner.update(responses, delta);		
 	}
 
 }

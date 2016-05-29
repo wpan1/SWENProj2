@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import com.unimelb.swen30006.partc.ai.interfaces.IPlanning;
 import com.unimelb.swen30006.partc.ai.interfaces.PerceptionResponse;
 import com.unimelb.swen30006.partc.core.objects.Car;
+import com.unimelb.swen30006.ai.planning.PerceptionHandler;
 import com.unimelb.swen30006.partc.roads.Road;
 
 public class BasicPlanner implements IPlanning{
@@ -16,6 +17,7 @@ public class BasicPlanner implements IPlanning{
 	Car c;
 	ArrayList<Point2D.Double> route;
 	CarNavigator cn;
+	PerceptionHandler ph;
 	WorldConverter convertedWorld;
 	
 	public BasicPlanner(Car c){
@@ -24,6 +26,7 @@ public class BasicPlanner implements IPlanning{
 		this.pg = new Dijkstra(convertedWorld);
 		this.c = c;
 		this.cn = new CarNavigator(this.c);
+		this.ph = new PerceptionHandler(this.c);
 	}
 	
 	@Override
@@ -48,6 +51,7 @@ public class BasicPlanner implements IPlanning{
 	@Override
 	public void update(PerceptionResponse[] results, float delta) {
 		// car navigation follow the route
+		ph.dealHighestResponse(ph.prioritiseResponse(results), delta);
 		cn.navigate(route, delta);
 	}
 

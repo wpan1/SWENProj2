@@ -25,12 +25,14 @@ public class PerceptionHandler {
 	public PerceptionResponse prioritiseResponse(PerceptionResponse[] results) {
 		PerceptionResponse nextResponse = results[0];
 		PerceptionResponse trafficresult = null;
+		System.out.println("22222222222222222");
 		for(PerceptionResponse pr: results){
 			// to be ordered
 			if(nextResponse.timeToCollision > pr.timeToCollision){
 				nextResponse = pr;
 			}
 			if(pr.objectType.equals(Classification.TrafficLight) && pr.distance < 10){
+				System.out.println("22222222222222222");
 				trafficresult = pr;
 			}
 		}
@@ -39,6 +41,7 @@ public class PerceptionHandler {
 			return nextResponse;
 		}
 		else{
+			System.out.println(1);
 			return trafficresult;
 		}
 	}
@@ -47,7 +50,7 @@ public class PerceptionHandler {
 	 * 
 	 * @param result: the incoming event that the car need deal with
 	 */
-	public void dealHighestResponse(PerceptionResponse result ) {
+	public void dealHighestResponse(PerceptionResponse result, float delta) {
 		// if the object in the front of the car is another car
 		if(result.objectType.equals(Classification.Car)){
 			if(car.getVelocity().len() > result.velocity.len()){
@@ -65,6 +68,7 @@ public class PerceptionHandler {
 				car.brake();
 			}
 		}
+		this.car.update(delta);
 	}
 	
 }
